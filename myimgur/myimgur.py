@@ -2,6 +2,8 @@ import sys
 from datetime import datetime
 from imgurpython import ImgurClient
 from auth import authenticate
+import pyperclip
+
 
 argvs = sys.argv 
 # If you already have an access/refresh pair in hand
@@ -38,5 +40,8 @@ if __name__ == "__main__":
 	#client = ImgurClient(client_id, client_secret, access_token, refresh_token)
 #	client = authenticate()
 	image = upload(client)
-
-
+#	items = client.gallery(section='top', sort='time', page=3, window='week', show_viral=False)
+#	print(image['link'])
+	imageLink = '[img]' + image['link'] + '[/img]'
+#	pyperclip.copy(image['link'])
+	pyperclip.copy(imageLink)
