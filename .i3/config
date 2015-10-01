@@ -1,38 +1,25 @@
 # i3 config file (v4)
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-#
-# This config file uses keycodes (bindsym) and was written for the QWERTY
-# layout.
-#
-# To get a config file with the same key positions, but for your current
-# layout, use the i3-config-wizard
-#
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:DejaVu Sans Mono 10
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 12
+font pango:DejaVu Sans Mono 9
 
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+#set variables
 
-# set workspace variables
 set $t1 "1:term"
 set $t2 "2:web"
-set $t3 "3:media"
+set $t3 "3:video"
 set $t4 "4:file"
 set $t5 "5:others"
+set $t6 "6:work"
+set $t7 "7:script"
+set $t8 "8:music"
+set $t9 "9:test"
+set $t0 "10:system"
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
+
 set $up k
 set $down j
 set $left h
@@ -43,16 +30,14 @@ floating_modifier Mod1
 
 # start a terminal
 bindsym Mod1+Return exec lxterminal
+bindsym Mod4+Return exec xfce-terminal
 
 # kill focused window
 bindsym Mod1+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym Mod1+d exec j4-dmenu-desktop
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+bindsym Mod1+d exec --no-startup-id j4-dmenu-desktop
+bindsym Mod4+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym Mod1+$left focus left
@@ -117,11 +102,11 @@ bindsym Mod1+2 workspace $t2
 bindsym Mod1+3 workspace $t3
 bindsym Mod1+4 workspace $t4
 bindsym Mod1+5 workspace $t5
-bindsym Mod1+6 workspace 6
-bindsym Mod1+7 workspace 7
-bindsym Mod1+8 workspace 8
-bindsym Mod1+9 workspace 9
-bindsym Mod1+0 workspace 10
+bindsym Mod1+6 workspace $t6
+bindsym Mod1+7 workspace $t7
+bindsym Mod1+8 workspace $t8
+bindsym Mod1+9 workspace $t9
+bindsym Mod1+0 workspace $t0
 
 # move focused container to workspace
 bindsym Mod1+Shift+1 move container to workspace $t1
@@ -129,25 +114,52 @@ bindsym Mod1+Shift+2 move container to workspace $t2
 bindsym Mod1+Shift+3 move container to workspace $t3
 bindsym Mod1+Shift+4 move container to workspace $t4
 bindsym Mod1+Shift+5 move container to workspace $t5
-bindsym Mod1+Shift+6 move container to workspace 6
-bindsym Mod1+Shift+7 move container to workspace 7
-bindsym Mod1+Shift+8 move container to workspace 8
-bindsym Mod1+Shift+9 move container to workspace 9
-bindsym Mod1+Shift+0 move container to workspace 10
+bindsym Mod1+Shift+6 move container to workspace $t6
+bindsym Mod1+Shift+7 move container to workspace $t7
+bindsym Mod1+Shift+8 move container to workspace $t8
+bindsym Mod1+Shift+9 move container to workspace $t9
+bindsym Mod1+Shift+0 move container to workspace $t0
+
+# Use Control-Up and Down to rotate through the workspace list.
+bindsym Mod1+Control+Left workspace prev
+bindsym Mod1+Control+Right workspace next
+
+# Use mod-Shift-Control-Up and Down to move the selected window to an
+# adjacent workspace. (This does *not* change your view to that workspace,
+# it just "zaps" the window there.)
+bindsym Mod1+Shift+Control+Left move workspace prev
+bindsym Mod1+Shift+Control+Right move workspace next
 
 # reload the configuration file
 bindsym Mod1+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym Mod1+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym Mod1+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 #set volume
-bindsym Mod1+comma exec amixer set Master -q 5%-
-bindsym Mod1+period exec amixer set Master -q 5%+
+bindsym Mod1+comma exec --no-startup-id amixer set Master -q 5%-
+bindsym Mod1+period exec --no-startup-id amixer set Master -q 5%+
 
 #set bg-image
 exec --no-startup-id feh --bg-scale /home/shiorin/Downloads/vimBg.png
+
+#keyboard shortcut
+bindsym Mod4+f exec /usr/bin/firefox
+bindsym Mod4+t exec /usr/bin/lxterminal
+bindsym Mod4+q exec /usr/bin/qupzilla
+
+#set screenshot
+#old setting
+#bindsym Print exec scrot $HOME/Pictures/ScreenShoots/`date +%Y-%m-%d_%H:%M:%S`.png
+
+#set screenshot as a variable
+set $ss  $HOME/Pictures/ScreenShoots/`date +%Y-%m-%d_%H:%M:%S`.png
+#use the variable and use personal python script auto upload to imgur
+bindsym Print exec scrot $ss; exec python ~/Documents/python/myimgur.py $ss
+bindsym Mod1+Print exec scrot -u $ss; exec python ~/Documents/python/myimgur.py $ss
+bindsym Mod1+Shift+Print exec scrot -s $ss; exec python ~/Documents/python/myimgur.py $ss
+
 
 #auto to workspace
 assIgn [class="Spacefm"] $t4
@@ -155,11 +167,14 @@ assign [class="Thunar"] $t4
 assign [class="Firefox"] $t2
 assign [class="mpv"] $t3
 assign [class="smplayer"] $t3
-assign [class='Audacious'] $t3
+assign [class="^Audacious$"] $t8
+assign [class="QupZilla"] $t2
+assign [class="^Anki$"] $t6
 
+for_window [class="^Anki$"] focus
 for_window [class="Guake"] floating enable
-for_window [class='feh'] floating enable
-
+for_window [class="feh"] floating enable
+for_window [class="gwenview"] floating enable
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -192,10 +207,10 @@ bindsym Mod1+r mode "resize"
 # finds out, if available)
 bar {
     font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-    font pango:DejaVu Sans Mono 10
+    font pango:DejaVu Sans Mono 9
     mode            dock
     workspace_buttons yes
-    tray_output       none
+    #tray_output       none
 
 
     colors {
@@ -218,6 +233,7 @@ bar {
 
 }
 
+exec --no-startup-id guake
 
 #######################################################################
 # automatically start i3-config-wizard to offer the user to create a
